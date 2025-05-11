@@ -25,6 +25,14 @@ class GenerateOTPView(APIView):
             expired_at = timezone.now() + timedelta(minutes=5)
 
             otp = OtpStore.objects.create(user=user, otp_code=otp_code, expired_at=expired_at)
+            
+            send_mail(
+                subject='Verify Your Account',
+                message=f'Your OTP code is {otp_code}',
+                from_email=settings.EMAIL_HOST_USER,
+                recipient_list=[user.email],
+                fail_silently=False
+            )
 
             return Response({
                 'data': {'otp_code': otp.otp_code},
@@ -109,7 +117,7 @@ class ResendOTPView(APIView):
             OtpStore.objects.create(user=user, otp_code=otp_code, expired_at=expired_at)
 
             send_mail(
-                subject='Verify Your Account',
+                subject='Resend OTP',
                 message=f'Your OTP code is {otp_code}',
                 from_email=settings.EMAIL_HOST_USER,
                 recipient_list=[user.email],

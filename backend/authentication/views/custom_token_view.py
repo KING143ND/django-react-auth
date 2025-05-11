@@ -19,7 +19,7 @@ class CustomTokenObtainPairView(views.APIView):
 
             email = serializer.validated_data['email']
             password = serializer.validated_data['password']
-            user = auth.authenticate(email=email, password=password)
+            user = auth.authenticate(request, email=email, password=password)
 
             if not user:
                 return Response({
@@ -29,6 +29,7 @@ class CustomTokenObtainPairView(views.APIView):
 
             try:
                 refresh = RefreshToken.for_user(user)
+                auth.login(request, user)
 
                 data = {
                     'refresh': str(refresh),

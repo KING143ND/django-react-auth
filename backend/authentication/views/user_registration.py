@@ -29,11 +29,13 @@ class SignUpView(APIView):
                 username=email,
                 email=email,
                 password=serializer.validated_data['password'],
-                is_active=False
             )
-
+            
             return Response({
-                'data': serializer.data,
+                'data': {
+                    'id': user.id,
+                    'email': user.email
+                },
                 'status': status.HTTP_201_CREATED,
                 'message': 'User created successfully.'
             }, status=status.HTTP_201_CREATED)

@@ -23,7 +23,7 @@ class ForgotPasswordView(APIView):
 
             token = account_activation_token.make_token(user)
             frontend_base_url = getattr(settings, 'FRONTEND_URL', '')
-            reset_link = f"{frontend_base_url}/reset?user_id={user.pk}&token={token}"
+            reset_link = f"{frontend_base_url}/reset-password?user_id={user.pk}&token={token}"
 
             send_mail(
                 subject="Password Reset Request",

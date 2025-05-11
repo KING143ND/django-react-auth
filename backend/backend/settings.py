@@ -38,6 +38,7 @@ BACKEND_URL = os.getenv('BACKEND_URL')
 
 # CSRF settings
 CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', '').split(',')
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Application definition
 
@@ -60,6 +61,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -184,3 +186,8 @@ EMAIL_PORT = int(os.getenv('EMAIL_PORT', 587))
 EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True') == 'True'
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+
+AUTHENTICATION_BACKENDS = [
+    'utils.backend.EmailAuthBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]

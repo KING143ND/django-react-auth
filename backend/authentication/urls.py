@@ -6,6 +6,8 @@ from authentication.views import (
     GenerateOTPView, ValidateOTPView, ResendOTPView, 
     # Custom Token Views
     CustomTokenObtainPairView,
+    # Dashboard Views
+    DashboardView
 )
 from rest_framework_simplejwt.views import (
     # Refresh Token Views
@@ -21,7 +23,7 @@ urlpatterns = [
         name='token_obtain_pair'
     ),
     path(
-        'token/refresh/', 
+        'token-refresh/', 
         TokenRefreshView.as_view(), 
         name='token_refresh'
     ),
@@ -32,34 +34,40 @@ urlpatterns = [
     ),
     # User endpoints
     path(
-        'password/change/', 
+        'password-change/', 
         ChangePasswordView.as_view(), 
         name='change-password'
     ),
     path(
-        'password/forgot/', 
+        'password-forgot/', 
         ForgotPasswordView.as_view(), 
         name='forgot-password'
     ),
     path(
-        'password/reset/<int:user_id>/<str:token>/', 
+        'password-reset/<int:user_id>/<str:token>/', 
         PasswordResetConfirmView.as_view(), 
         name='password-reset-confirm'
     ),
     # OTP endpoints
     path(
-        'otp/', 
+        'otp-generate/', 
         GenerateOTPView.as_view(), 
         name='generate-otp'
     ),
     path(
-        'otp/validate/', 
+        'otp-validate/', 
         ValidateOTPView.as_view(), 
         name='validate-otp'
     ),
     path(
-        'otp/resend/', 
+        'otp-resend/', 
         ResendOTPView.as_view(), 
         name='resend-otp'
+    ),
+    # Dashboard endpoints
+    path(
+        'dashboard/', 
+        DashboardView.as_view(), 
+        name='dashboard'
     ),
 ]
